@@ -7,14 +7,18 @@ class NewDetailsScreen extends StatefulWidget {
   final String title;
   final String author;
   final String description;
+  final String content;
   final String url;
   final Color bgcolor;
+  final String imageUrl;
 
   const NewDetailsScreen({super.key, 
   required this.bgcolor,
   required this.title,
   required this.author,
   required this.description,
+  required this.content,
+  required this.imageUrl,
   required this.url
   });
 
@@ -112,12 +116,12 @@ class _NewDetailsScreenState extends State<NewDetailsScreen> {
 
                                 const SizedBox(height: 24),
                       
-                                AspectRatio(
+                                if(widget.imageUrl != "")...[AspectRatio(
                                     aspectRatio: 16 / 9,
                                   child: ClipRRect(
                                       borderRadius: BorderRadius.circular(16),
                                       child: Image.network(
-                                      'https://cdn.mos.cms.futurecdn.net/sgS7A4ihiCsrLSF67nBP9Q-2000-80.jpg',
+                                      widget.imageUrl,
                                       fit: BoxFit.cover,
                                       errorBuilder: (context, error, stackTrace) {
                                           return Container(
@@ -132,7 +136,7 @@ class _NewDetailsScreenState extends State<NewDetailsScreen> {
                                 ),
 
                                 const SizedBox(height: 24),
-                                
+                                ],
                                 // Article Text
                                 Text(
                                     widget.description,
@@ -144,8 +148,8 @@ class _NewDetailsScreenState extends State<NewDetailsScreen> {
                                 ),
                                 const SizedBox(height: 24),
 
-                                const Text(
-                                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+                                Text(
+                                    widget.content,
                                     style: TextStyle(
                                     fontSize: 16,
                                     height: 1.6,

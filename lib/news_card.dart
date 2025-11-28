@@ -10,14 +10,18 @@ class NewsCard extends StatefulWidget {
   final String title;
   final String author;
   final String description;
+  final String imageUrl;
   final String url;
-
+  final String content;
+  
 
   const NewsCard({super.key, 
   required this.cardColor,
   required this.title,
   required this.author,
   required this.description,
+  required this.content,
+  required this.imageUrl,
   required this.url  
   });
 
@@ -38,6 +42,8 @@ class _NewsCardState extends State<NewsCard> {
             title: widget.title,
             author: widget.author,
             description: widget.description,
+            content: widget.content,
+            imageUrl: widget.imageUrl,
             url: widget.url,
             )
           ));

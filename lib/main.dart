@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_news_app/homepage.dart';
+import 'package:flutter_news_app/savedpage.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() {
@@ -23,7 +24,7 @@ class MyNewsApp extends StatelessWidget {
         ),
         ),
       
-      home: Homepage()
+      home: SavedNews()//Homepage()
       );
   }
 }

@@ -82,6 +82,8 @@ class _HomepageState extends State<Homepage> {
                 author: data['articles'][index]['author']==null|| data['articles'][index]['author']==""? "No Author":data['articles'][index]['author'],
 
                 description: data['articles'][index]['description']==null|| data['articles'][index]['description']==""? data['articles'][index]['content']!:data['articles'][index]['description'],
+                content: data['articles'][index]['content']==null|| data['articles'][index]['content']==""? "No Content":data['articles'][index]['content'],                
+                imageUrl: data['articles'][index]['urlToImage']==null|| data['articles'][index]['urlToImage']==""? "":data['articles'][index]['urlToImage'],
                 url: data['articles'][index]['url']
                ),
             );
