@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_news_app/ArticlesProvider.dart';
 import 'package:flutter_news_app/homepage.dart';
-import 'package:flutter_news_app/likedscreen.dart';
 import 'package:flutter_news_app/new_details.dart';
+import 'package:flutter_news_app/savedpage.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:provider/provider.dart';
 
-class SavedNews extends StatefulWidget {
-  const SavedNews({super.key});
+class Likedscreen extends StatefulWidget {
+  const Likedscreen({super.key});
 
   @override
-  State<SavedNews> createState() => _SavedNewsState();
+  State<Likedscreen> createState() => _LikedscreenState();
 }
 
-class _SavedNewsState extends State<SavedNews> {
+class _LikedscreenState extends State<Likedscreen> {
   final List<Color> colors = [
     Color.fromRGBO(255, 242, 197, 1),
     Color.fromRGBO(251, 229, 225, 1),
@@ -29,7 +29,7 @@ class _SavedNewsState extends State<SavedNews> {
     super.initState();
     // Initialize filtered articles from provider
     final provider = Provider.of<ArticlesProvider>(context, listen: false);
-    filteredArticles = List.from(provider.savedArticles);
+    filteredArticles = List.from(provider.likedArticles);
   }
 
   void _searchArticles(String query, List<Map<String, dynamic>> allArticles) {
@@ -43,7 +43,7 @@ class _SavedNewsState extends State<SavedNews> {
   }
 
   void _removeArticle(String url) {
-    Provider.of<ArticlesProvider>(context, listen: false).removeFromSaved(url);
+    Provider.of<ArticlesProvider>(context, listen: false).removeFromLiked(url);
   }
 
   @override
@@ -51,7 +51,7 @@ class _SavedNewsState extends State<SavedNews> {
     // Use Consumer to rebuild when provider changes
     return Consumer<ArticlesProvider>(
       builder: (context, articlesProvider, child) {
-        final allArticles = articlesProvider.savedArticles;
+        final allArticles = articlesProvider.likedArticles;
         
         // Update filtered articles when allArticles changes
         if (searchController.text.isEmpty) {
@@ -80,7 +80,7 @@ class _SavedNewsState extends State<SavedNews> {
                       const SizedBox(width: 10),
                       const Expanded(
                         child: Text(
-                          'Saved News',
+                          'Liked News',
                           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -96,7 +96,7 @@ class _SavedNewsState extends State<SavedNews> {
                       children: [
                         Expanded(
                           child: SearchBar(
-                            hintText: "Search saved articles",
+                            hintText: "Search liked articles",
                             controller: searchController,
                             onChanged: (query) => _searchArticles(query, allArticles),
                           ),
@@ -124,7 +124,7 @@ class _SavedNewsState extends State<SavedNews> {
                     child: filteredArticles.isEmpty
                         ? const Center(
                             child: Text(
-                              "No saved articles found",
+                              "No liked articles found",
                               style: TextStyle(fontSize: 18),
                             ),
                           )
@@ -231,7 +231,7 @@ class _SavedNewsState extends State<SavedNews> {
                                                   return AlertDialog(
                                                     title: const Text("Remove Article"),
                                                     content: const Text(
-                                                        "Do you want to remove this article from saved?"),
+                                                        "Do you want to remove this article from liked?"),
                                                     actions: [
                                                       TextButton(
                                                         onPressed: () {
@@ -288,16 +288,16 @@ class _SavedNewsState extends State<SavedNews> {
                           );
                         }),
                         const SizedBox(width: 25),
-                        _circleBtn(const Icon(Icons.thumb_up_alt_outlined), false, () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(builder: (context) => Likedscreen()),
-                          );
-                        }),
+                        _circleBtn(const Icon(Icons.thumb_up_alt_outlined), true, () {}),
                         const SizedBox(width: 25),
                         _circleBtn(const Icon(Icons.search_rounded), false, () {}),
                         const SizedBox(width: 25),
-                        _circleBtn(const Icon(Icons.save_alt), true, () {}),
+                        _circleBtn(const Icon(Icons.save_alt), false, () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => SavedNews()),
+                          );
+                        }),
                       ],
                     ),
                   ),
