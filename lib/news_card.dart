@@ -28,7 +28,7 @@ class NewsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Watch the provider for changes
+    
     final articlesProvider = Provider.of<ArticlesProvider>(context);
     final isLiked = articlesProvider.isLiked(url);
     final isSaved = articlesProvider.isSaved(url);
@@ -178,7 +178,7 @@ class NewsCard extends StatelessWidget {
                   ),
                   const SizedBox(width: 20),
 
-                  // Share Button
+                 
                   _iconButton(
                     Icons.share,
                     const Color.fromARGB(255, 89, 89, 89),
@@ -188,7 +188,7 @@ class NewsCard extends StatelessWidget {
                   ),
                   const SizedBox(width: 20),
 
-                  // Save Button
+                  
                   _iconButton(
                     Icons.bookmark_add_rounded,
                     isSaved ? Colors.green : const Color.fromARGB(255, 89, 89, 89),

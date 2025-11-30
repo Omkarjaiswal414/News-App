@@ -1,9 +1,9 @@
-// Updated Homepage - Only this screen keeps its state
 import 'package:flutter/material.dart';
 import 'package:flutter_news_app/data.dart';
 import 'package:flutter_news_app/likedscreen.dart';
 import 'package:flutter_news_app/news_card.dart';
 import 'package:flutter_news_app/savedpage.dart';
+import 'package:flutter_news_app/searchscreen.dart';
 import 'package:tcard/tcard.dart';
 
 class Homepage extends StatefulWidget {
@@ -29,7 +29,7 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
   
   final TCardController _controller = TCardController();
 
-  // This keeps the state alive when navigating away and coming back
+  
   @override
   bool get wantKeepAlive => true;
 
@@ -43,8 +43,8 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
 
   @override
   Widget build(BuildContext context) {
-    super.build(context); // IMPORTANT: Must call super.build for AutomaticKeepAliveClientMixin
-    
+    super.build(context); 
+
     return Scaffold(
       body: FutureBuilder(
         future: futureNews,
@@ -183,7 +183,12 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
                           );
                         }),
                         const SizedBox(width: 25),
-                        _circleBtn(const Icon(Icons.search_rounded), false, () {}),
+                        _circleBtn(const Icon(Icons.search_rounded), false, () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => SearchScreen()),
+                          );
+                        }),
                         const SizedBox(width: 25),
                         _circleBtn(const Icon(Icons.save_alt), false, () {
                           Navigator.push(

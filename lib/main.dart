@@ -10,7 +10,7 @@ void main() {
     ChangeNotifierProvider(
       create: (context) {
         final provider = ArticlesProvider();
-        // Initialize with existing data
+        
         provider.initializeWithData(likedArticles, savedArticles);
         return provider;
       },

@@ -3,6 +3,7 @@ import 'package:flutter_news_app/ArticlesProvider.dart';
 import 'package:flutter_news_app/homepage.dart';
 import 'package:flutter_news_app/likedscreen.dart';
 import 'package:flutter_news_app/new_details.dart';
+import 'package:flutter_news_app/searchscreen.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:provider/provider.dart';
 
@@ -48,12 +49,12 @@ class _SavedNewsState extends State<SavedNews> {
 
   @override
   Widget build(BuildContext context) {
-    // Use Consumer to rebuild when provider changes
+    
     return Consumer<ArticlesProvider>(
       builder: (context, articlesProvider, child) {
         final allArticles = articlesProvider.savedArticles;
         
-        // Update filtered articles when allArticles changes
+        
         if (searchController.text.isEmpty) {
           filteredArticles = List.from(allArticles);
         }
@@ -88,7 +89,7 @@ class _SavedNewsState extends State<SavedNews> {
                   ),
                   const SizedBox(height: 20),
 
-                  // Search Bar
+                  
                   SizedBox(
                     height: 50,
                     width: double.infinity,
@@ -119,7 +120,7 @@ class _SavedNewsState extends State<SavedNews> {
                   ),
                   const SizedBox(height: 10),
 
-                  // ListView with ListTile
+                  
                   Expanded(
                     child: filteredArticles.isEmpty
                         ? const Center(
@@ -274,7 +275,7 @@ class _SavedNewsState extends State<SavedNews> {
                   ),
                   const SizedBox(height: 10),
 
-                  // Bottom Navigation
+                  
                   SizedBox(
                     height: 50,
                     width: double.infinity,
@@ -295,7 +296,12 @@ class _SavedNewsState extends State<SavedNews> {
                           );
                         }),
                         const SizedBox(width: 25),
-                        _circleBtn(const Icon(Icons.search_rounded), false, () {}),
+                        _circleBtn(const Icon(Icons.search_rounded), false, () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => SearchScreen()),
+                          );
+                        }),
                         const SizedBox(width: 25),
                         _circleBtn(const Icon(Icons.save_alt), true, () {}),
                       ],
