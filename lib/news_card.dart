@@ -5,6 +5,7 @@ import 'package:flutter_news_app/ArticlesProvider.dart';
 import 'package:flutter_news_app/new_details.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class NewsCard extends StatelessWidget {
   final Color cardColor;
@@ -14,6 +15,7 @@ class NewsCard extends StatelessWidget {
   final String imageUrl;
   final String url;
   final String content;
+  final String publishedAt;
 
   const NewsCard({
     super.key,
@@ -24,14 +26,37 @@ class NewsCard extends StatelessWidget {
     required this.content,
     required this.imageUrl,
     required this.url,
+    required this.publishedAt,
   });
+
+  bool _isLive() {
+    try {
+      final publishedDate = DateTime.parse(publishedAt);
+      final now = DateTime.now();
+      final difference = now.difference(publishedDate);
+      
+      // Consider "LIVE" if published within last 30 minutes
+      return difference.inMinutes <= 30;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  String _getTimeAgo() {
+    try {
+      final publishedDate = DateTime.parse(publishedAt);
+      return "Updated at ${timeago.format(publishedDate, locale: 'en_short')}";
+    } catch (e) {
+      return 'Updated just now';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    
     final articlesProvider = Provider.of<ArticlesProvider>(context);
     final isLiked = articlesProvider.isLiked(url);
     final isSaved = articlesProvider.isSaved(url);
+    final isLive = _isLive();
 
     return GestureDetector(
       onTap: () {
@@ -46,6 +71,7 @@ class NewsCard extends StatelessWidget {
               content: content,
               imageUrl: imageUrl,
               url: url,
+              publishedAt: publishedAt,
             ),
           ),
         );
@@ -62,23 +88,24 @@ class NewsCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                alignment: Alignment.center,
-                width: 50,
-                height: 22,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.red,
-                ),
-                child: const Text(
-                  "LIVE",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+              if (isLive)
+                Container(
+                  alignment: Alignment.center,
+                  width: 50,
+                  height: 22,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.red,
+                  ),
+                  child: const Text(
+                    "LIVE",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 8),
+              if (isLive) const SizedBox(height: 8),
 
               Text(
                 title,
@@ -92,8 +119,8 @@ class NewsCard extends StatelessWidget {
               ),
 
               const SizedBox(height: 10),
-              const Text(
-                "Updated just now",
+              Text(
+                _getTimeAgo(),
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -150,7 +177,6 @@ class NewsCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  // Like Button
                   _iconButton(
                     Icons.thumb_up_alt_outlined,
                     isLiked ? Colors.blue : const Color.fromARGB(255, 89, 89, 89),
@@ -162,6 +188,7 @@ class NewsCard extends StatelessWidget {
                         'content': content,
                         'imageUrl': imageUrl,
                         'url': url,
+                        'publishedAt': publishedAt,
                       });
 
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -178,7 +205,6 @@ class NewsCard extends StatelessWidget {
                   ),
                   const SizedBox(width: 20),
 
-                 
                   _iconButton(
                     Icons.share,
                     const Color.fromARGB(255, 89, 89, 89),
@@ -188,7 +214,6 @@ class NewsCard extends StatelessWidget {
                   ),
                   const SizedBox(width: 20),
 
-                  
                   _iconButton(
                     Icons.bookmark_add_rounded,
                     isSaved ? Colors.green : const Color.fromARGB(255, 89, 89, 89),
@@ -200,6 +225,7 @@ class NewsCard extends StatelessWidget {
                         'content': content,
                         'imageUrl': imageUrl,
                         'url': url,
+                        'publishedAt': publishedAt,
                       });
 
                       ScaffoldMessenger.of(context).showSnackBar(

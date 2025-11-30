@@ -29,7 +29,6 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
   
   final TCardController _controller = TCardController();
 
-  
   @override
   bool get wantKeepAlive => true;
 
@@ -95,7 +94,8 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
               imageUrl: data['articles'][index]['urlToImage'] == null || data['articles'][index]['urlToImage'] == "" 
                   ? "" 
                   : data['articles'][index]['urlToImage'],
-              url: data['articles'][index]['url']
+              url: data['articles'][index]['url'],
+              publishedAt: data['articles'][index]['publishedAt'] ?? "Updated at ${DateTime.now().toIso8601String()}",
             ),
           );
 

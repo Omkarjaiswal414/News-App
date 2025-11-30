@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_news_app/ArticlesProvider.dart';
 import 'package:flutter_news_app/homepage.dart';
@@ -28,7 +30,6 @@ class _SavedNewsState extends State<SavedNews> {
   @override
   void initState() {
     super.initState();
-    // Initialize filtered articles from provider
     final provider = Provider.of<ArticlesProvider>(context, listen: false);
     filteredArticles = List.from(provider.savedArticles);
   }
@@ -49,11 +50,9 @@ class _SavedNewsState extends State<SavedNews> {
 
   @override
   Widget build(BuildContext context) {
-    
     return Consumer<ArticlesProvider>(
       builder: (context, articlesProvider, child) {
         final allArticles = articlesProvider.savedArticles;
-        
         
         if (searchController.text.isEmpty) {
           filteredArticles = List.from(allArticles);
@@ -89,7 +88,6 @@ class _SavedNewsState extends State<SavedNews> {
                   ),
                   const SizedBox(height: 20),
 
-                  
                   SizedBox(
                     height: 50,
                     width: double.infinity,
@@ -120,7 +118,6 @@ class _SavedNewsState extends State<SavedNews> {
                   ),
                   const SizedBox(height: 10),
 
-                  
                   Expanded(
                     child: filteredArticles.isEmpty
                         ? const Center(
@@ -155,6 +152,7 @@ class _SavedNewsState extends State<SavedNews> {
                                           content: article['content']!,
                                           imageUrl: article['urlToImage'] ?? "",
                                           url: article['url']!,
+                                          publishedAt: article['publishedAt'] ?? "Updated at ${DateTime.now().toIso8601String()}",
                                         ),
                                       ),
                                     );
@@ -275,7 +273,6 @@ class _SavedNewsState extends State<SavedNews> {
                   ),
                   const SizedBox(height: 10),
 
-                  
                   SizedBox(
                     height: 50,
                     width: double.infinity,

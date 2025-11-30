@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_news_app/ArticlesProvider.dart';
 import 'package:flutter_news_app/homepage.dart';
@@ -49,11 +51,9 @@ class _LikedscreenState extends State<Likedscreen> {
 
   @override
   Widget build(BuildContext context) {
-    
     return Consumer<ArticlesProvider>(
       builder: (context, articlesProvider, child) {
         final allArticles = articlesProvider.likedArticles;
-        
         
         if (searchController.text.isEmpty) {
           filteredArticles = List.from(allArticles);
@@ -89,7 +89,6 @@ class _LikedscreenState extends State<Likedscreen> {
                   ),
                   const SizedBox(height: 20),
 
-                  
                   SizedBox(
                     height: 50,
                     width: double.infinity,
@@ -120,7 +119,6 @@ class _LikedscreenState extends State<Likedscreen> {
                   ),
                   const SizedBox(height: 10),
 
-                  
                   Expanded(
                     child: filteredArticles.isEmpty
                         ? const Center(
@@ -155,6 +153,7 @@ class _LikedscreenState extends State<Likedscreen> {
                                           content: article['content']!,
                                           imageUrl: article['urlToImage'] ?? "",
                                           url: article['url']!,
+                                          publishedAt: "Updated at ${article['publishedAt'] ?? DateTime.now().toIso8601String()}",
                                         ),
                                       ),
                                     );
@@ -275,7 +274,6 @@ class _LikedscreenState extends State<Likedscreen> {
                   ),
                   const SizedBox(height: 10),
 
-                  // Bottom Navigation
                   SizedBox(
                     height: 50,
                     width: double.infinity,

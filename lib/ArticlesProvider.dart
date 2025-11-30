@@ -30,6 +30,7 @@ class ArticlesProvider extends ChangeNotifier {
         'content': articleData['content'],
         'urlToImage': articleData['imageUrl'],
         'url': articleData['url'],
+        'publishedAt': "Updated at ${articleData['publishedAt'] ?? DateTime.now().toIso8601String()}",
         'liked': 'true',
         'saved': isSaved(articleData['url']) ? 'true' : 'false',
       });
@@ -50,6 +51,7 @@ class ArticlesProvider extends ChangeNotifier {
         'content': articleData['content'],
         'urlToImage': articleData['imageUrl'],
         'url': articleData['url'],
+        'publishedAt': "Updated at ${articleData['publishedAt'] ?? DateTime.now().toIso8601String()}",
         'liked': isLiked(articleData['url']) ? 'true' : 'false',
         'saved': 'true',
       });

@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_news_app/data.dart';
 import 'package:flutter_news_app/homepage.dart';
@@ -48,7 +50,6 @@ class _SearchScreenState extends State<SearchScreen> {
 
     try {
       final data = await searchNews(query);
-      
       
       final articles = (data['articles'] as List).where((article) {
         return article['title'] != null &&
@@ -101,7 +102,6 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
               const SizedBox(height: 20),
 
-              
               SizedBox(
                 height: 50,
                 width: double.infinity,
@@ -130,7 +130,6 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
               const SizedBox(height: 20),
 
-              
               Expanded(
                 child: isLoading
                     ? const Center(
@@ -237,6 +236,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                         content: article['content'] ?? 'No Content',
                                                         imageUrl: article['urlToImage'] ?? "",
                                                         url: article['url'] ?? "",
+                                                        publishedAt: article['publishedAt'] ?? "Updated at ${DateTime.now().toIso8601String()}",
                                                       ),
                                                     ),
                                                   );
@@ -317,7 +317,6 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
               const SizedBox(height: 10),
 
-             
               SizedBox(
                 height: 50,
                 width: double.infinity,
